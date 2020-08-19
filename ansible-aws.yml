@@ -1,0 +1,26 @@
+---
+- name: create 2 instances
+  hosts: localhost
+  gather_facts: False
+  vars:
+    keypair: my-key.pem
+    instance_type: t2.micro
+    security_group: Open
+    image: ami-0bbe28eb2173f6167
+    region: us-east-2
+    subnetid: vpc-ea13c881
+    tasks:
+      - name: add 1st instance
+        ec2:
+          key_name: "{{ keypair }}"
+          group: "{{ security_group }}"
+          instance_type: "{{ instance_type }}"
+          image: "{{ image }}"
+          wait: true
+          region: "{{ region }}"
+          vpc_subnet_id: "{ subnetid }"
+          assign_public_ip: yes
+        register: ec2
+      - name: Add 1s node to host group
+          add_host: hostname={{ item.public_ip }} group=build
+          loop: "{{ ec2.instances }}"
