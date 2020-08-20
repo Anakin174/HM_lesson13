@@ -27,24 +27,25 @@
           assign_public_ip: yes
         register: ec2
 
-      - name: Add 1s node to host group
-          add_host: hostname={{ item.public_ip }} group=build
-          loop: "{{ ec2.instances }}"
+      - name: Add build node to host group
+        add_host: hostname={{ item.public_ip }} group=build
+        loop: "{{ ec2.instances }}"
 
       - name: add prode instance
-          ec2:
-            key_name: "{{ keypair }}"
-            group: "{{ security_group }}"
-            instance_type: "{{ instance_type }}"
-            image: "{{ image }}"
-            wait: true
-            region: "{{ region }}"
-            vpc_subnet_id: "{ subnetid }"
-            assign_public_ip: yes
-          register: ec2
-            - name: Add 2s node to host group
-                add_host: hostname={{ item.public_ip }} group=prod
-                loop: "{{ ec2.instances }}"
+        ec2:
+          key_name: "{{ keypair }}"
+          group: "{{ security_group }}"
+          instance_type: "{{ instance_type }}"
+          image: "{{ image }}"
+          wait: true
+          region: "{{ region }}"
+          vpc_subnet_id: "{ subnetid }"
+          assign_public_ip: yes
+        register: ec2
+
+        - name: Add 2s node to host group
+          add_host: hostname={{ item.public_ip }} group=prod
+          loop: "{{ ec2.instances }}"
 
 - name: build project
   hosts: build
