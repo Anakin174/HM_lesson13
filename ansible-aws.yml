@@ -12,8 +12,8 @@
     tasks:
 
       - name: create key pair
-          ec2_key: "name=my-key key_material={{ item }} region={{ region }}"
-          with_file: ~/.ssh/id_rsa.pub
+        ec2_key: "name=my-key key_material={{ item }} region={{ region }}"
+        with_file: ~/.ssh/id_rsa.pub
 
       - name: add build instance
         ec2:
