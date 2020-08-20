@@ -14,7 +14,7 @@
 
 - name: Copy .war-file
   synchronize:
-    src: "/work/target/hello-1.0.war"
+    src: "/work/hello-1.0.war"
     dest: "{{ dest_folder }}"
   notify:
     - restart tomcat
