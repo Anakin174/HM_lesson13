@@ -9,7 +9,8 @@
     image: ami-0bbe28eb2173f6167
     region: us-east-2
     subnetid: vpc-ea13c881
-    tasks:
+
+  tasks:
 
       - name: create key pair
         ec2_key: "name=my-key key_material={{ item }} region={{ region }}"
