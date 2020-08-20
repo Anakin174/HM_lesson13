@@ -1,5 +1,8 @@
 ---
 # tasks file for prod
+- name: Upgrade all apt packages
+  apt: upgrade=dist force_apt_get=yes
+
 - name: Install packages
   apt: name={{ item }} update_cache=yes state=present
   with_items:
