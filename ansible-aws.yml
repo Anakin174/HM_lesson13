@@ -10,7 +10,12 @@
     region: us-east-2
     subnetid: vpc-ea13c881
     tasks:
-      - name: add 1st instance
+
+    - name: create key pair
+        ec2_key: "name=my-key key_material={{ item }} region={{ region }}"
+        with_file: ~/.ssh/id_rsa.pub
+
+      - name: add build instance
         ec2:
           key_name: "{{ keypair }}"
           group: "{{ security_group }}"
@@ -21,11 +26,12 @@
           vpc_subnet_id: "{ subnetid }"
           assign_public_ip: yes
         register: ec2
+
       - name: Add 1s node to host group
           add_host: hostname={{ item.public_ip }} group=build
           loop: "{{ ec2.instances }}"
 
-      - name: add 2st instance
+      - name: add prode instance
           ec2:
             key_name: "{{ keypair }}"
             group: "{{ security_group }}"
@@ -39,3 +45,19 @@
             - name: Add 2s node to host group
                 add_host: hostname={{ item.public_ip }} group=prod
                 loop: "{{ ec2.instances }}"
+
+- name: build project
+  hosts: build
+  become: yes
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
+  roles:
+    - build
+
+- name: deploy to prod
+  hosts: prod
+  become: yes
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
+  roles:
+    - prod
