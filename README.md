@@ -1,8 +1,9 @@
 ### Lesson 13 Ansibile AWS ###
 
 
-Before use sudo apt install python python-pip:
+Before, use:
 ```sh
+$ sudo apt install python python-pip
 $ pip install boto boto3
 ```
 
