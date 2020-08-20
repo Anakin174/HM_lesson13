@@ -8,7 +8,6 @@
     security_group: Open
     image: ami-0bbe28eb2173f6167
     region: us-east-2
- #   subnetid: vpc-ea13c881
 
   tasks:
 
@@ -25,8 +24,6 @@
           instance_tags: { Name: build, type: build, env: build }
           wait: true
           region: "{{ region }}"
- #         vpc_subnet_id: "{ subnetid }"
- #         assign_public_ip: yes
         register: ec2
 
       - name: Add build node to host group
@@ -47,8 +44,6 @@
           instance_tags: { Name: prod, type: prod, env: prod }
           wait: true
           region: "{{ region }}"
-    #      vpc_subnet_id: "{ subnetid }"
-   #       assign_public_ip: yes
         register: ec2
 
       - name: Add 2s node to host group
