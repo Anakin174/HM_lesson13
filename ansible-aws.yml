@@ -3,7 +3,7 @@
   hosts: localhost
   gather_facts: False
   vars:
-    keypair: my-key.pem
+    keypair: my-key
     instance_type: t2.micro
     security_group: Open
     image: ami-0bbe28eb2173f6167
