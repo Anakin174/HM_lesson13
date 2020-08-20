@@ -1,7 +1,7 @@
 ---
 # tasks file for prod
 - name: install packages
-  apt: name={{ item }} state=present
+  apt: name={{ item }} update_cache=yes state=present
   with_items:
     - default-jdk
     - tomcat8
