@@ -8,7 +8,7 @@
     security_group: Open
     image: ami-0bbe28eb2173f6167
     region: us-east-2
-    subnetid: vpc-ea13c881
+ #   subnetid: vpc-ea13c881
 
   tasks:
 
@@ -24,7 +24,7 @@
           image: "{{ image }}"
           wait: true
           region: "{{ region }}"
-          vpc_subnet_id: "{ subnetid }"
+ #         vpc_subnet_id: "{ subnetid }"
           assign_public_ip: yes
         register: ec2
 
@@ -40,7 +40,7 @@
           image: "{{ image }}"
           wait: true
           region: "{{ region }}"
-          vpc_subnet_id: "{ subnetid }"
+    #      vpc_subnet_id: "{ subnetid }"
           assign_public_ip: yes
         register: ec2
 
