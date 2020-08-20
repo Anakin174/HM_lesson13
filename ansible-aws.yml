@@ -57,6 +57,7 @@
 
 - name: build project
   hosts: build
+  become_user: ubuntu
   become: yes
   vars:
     ansible_python_interpreter: /usr/bin/python3
@@ -66,6 +67,7 @@
 - name: deploy to prod
   hosts: prod
   become: yes
+  become_user: ubuntu
   vars:
     ansible_python_interpreter: /usr/bin/python3
   roles:
