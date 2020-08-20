@@ -1,7 +1,15 @@
 ---
 # tasks file for prod
 - name: install packages
-  apt: name={{item}} state=present update_cache=yes
+  apt: name={{ item }} state=present
   with_items:
-    - tomcat8
     - default-jdk
+    - tomcat8
+
+- name: Copy .war-file
+  synchronize:
+    src: "/work/target/hello-1.0.war"
+    dest: "{{ dest_folder }}"
+  delegate_to: "{{ build }}"
+  notify:
+    - restart tomcat
